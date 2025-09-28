@@ -6,7 +6,6 @@ export default class Quiz extends React.Component {
     constructor(props){
         super(props)
 
-        
         this.state = {
             questions : [
                 {
@@ -55,25 +54,52 @@ export default class Quiz extends React.Component {
             showScore : false , 
             score : 0
         }
-    
+    }
+
+    clickHandler (isCorrect){
+        console.log(isCorrect);
+        if(isCorrect){
+            this.setState((prevState)=>{
+                return {
+                    score : prevState.score + 1 
+                }
+            })
+        }
+        if(this.state.currentQuestion === 3){
+            this.setState({showScore : true})
+        }else{
+            this.setState((prevState)=>{
+            return{
+                currentQuestion : prevState.currentQuestion + 1 
+            }
+        })
+        }
+
+        
     }
     render (){
         return (
             <div className="app">
-                <div className="score-section"></div>
-                <div className="question-section">
+                {this.state.showScore ? 
+                (<div className="score-section">You Scored {this.state.score} out of {this.state.questions.length}</div>) :
+                (
+                    <div>
+                        <div className="question-section">
                     <div className="question-count">
-                        <span>Question 1</span>/4
+                        <span>Question {this.state.currentQuestion +1}</span>/{this.state.questions.length}
                     </div>
-                    <div className="question-text"></div>
+                    <div className="question-text">{this.state.questions[this.state.currentQuestion].questionText}</div>
 
                 </div>
                 <div className="answer-section">
-                    <button></button>
-                    <button></button>
-                    <button></button>
-                    <button></button>
+                    {this.state.questions[this.state.currentQuestion].answerOptions.map(answer=>(
+                        <button onClick={this.clickHandler.bind(this ,answer.isCorrect)}>{answer.answerText}</button>
+                    ))}
                 </div>
+                    </div>
+                )}
+                
+                
             </div>
         )
     }

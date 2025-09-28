@@ -41,8 +41,8 @@ body {
   font-weight: 600;
   color: #00ff88;
   margin-bottom: 2rem;
-  opacity: 0;
-  transition: opacity 0.5s ease;
+  /* opacity: 0;
+  transition: opacity 0.9s ease; */
 }
 
 .score-section.show {
